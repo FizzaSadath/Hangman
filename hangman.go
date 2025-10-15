@@ -1,16 +1,25 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 )
 
-func getSecretWord(wordFile string) string {
-	// words, err:=os.ReadFile(wordFile)
-	// if err!=nil{
-	// 	fmt.Println("Error opening file: %v",err)
-	// }
+func getSecretWord(wordFileName string) string {
+	//var allowedWords []string
+	wordFile, err := os.Open(wordFileName)
+	if err != nil {
+		errMessage := fmt.Sprintf("Can't open file %s : %v\n", wordFileName, err)
+		panic(errMessage)
+	}
+	defer wordFile.Close()
+	scanner := bufio.NewScanner(wordFile)
+	for scanner.Scan() {
+		word := scanner.Text()
+		fmt.Println(word)
+	}
 	return "elephant"
-
 }
 
 func main() {
