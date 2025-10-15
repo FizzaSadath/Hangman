@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math/rand"
 	"os"
 	"strings"
 )
@@ -22,8 +23,10 @@ func getSecretWord(wordFileName string) string {
 			allowedWords = append(allowedWords, word)
 		}
 	}
-	fmt.Println(allowedWords)
-	return "elephant"
+	//fmt.Println(len(allowedWords))
+	randomNo := rand.Intn(len(allowedWords))
+	//fmt.Println(randomNo)
+	return allowedWords[randomNo]
 }
 
 func main() {
