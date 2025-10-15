@@ -4,10 +4,11 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func getSecretWord(wordFileName string) string {
-	//var allowedWords []string
+	var allowedWords []string
 	wordFile, err := os.Open(wordFileName)
 	if err != nil {
 		errMessage := fmt.Sprintf("Can't open file %s : %v\n", wordFileName, err)
@@ -17,8 +18,11 @@ func getSecretWord(wordFileName string) string {
 	scanner := bufio.NewScanner(wordFile)
 	for scanner.Scan() {
 		word := scanner.Text()
-		fmt.Println(word)
+		if word == strings.ToLower(word) {
+			allowedWords = append(allowedWords, word)
+		}
 	}
+	fmt.Println(allowedWords)
 	return "elephant"
 }
 
