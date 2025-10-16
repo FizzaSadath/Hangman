@@ -9,6 +9,22 @@ import (
 	"unicode"
 )
 
+type Game struct {
+	secretWord     string
+	chancesLeft    uint
+	guesses        []byte
+	correctGuesses []byte
+}
+
+func NewGame(secretWord string) Game {
+	return Game{
+		secretWord:     secretWord,
+		chancesLeft:    7,
+		guesses:        []byte{},
+		correctGuesses: []byte{},
+	}
+}
+
 func isAllLetters(s string) bool {
 	for _, r := range s {
 		if !unicode.IsLetter(r) {
@@ -38,6 +54,11 @@ func getSecretWord(wordFileName string) string {
 	randomNo := rand.Intn(len(allowedWords))
 	return allowedWords[randomNo]
 }
+func playTurn(state Game, guess byte) Game {
+
+	return state
+}
 func main() {
 	fmt.Println(getSecretWord("/usr/share/dict/words"))
+	fmt.Println(NewGame(getSecretWord("/usr/share/dict/words")))
 }
