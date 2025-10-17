@@ -74,16 +74,47 @@ func TestSecretWordLength(t *testing.T) {
 	// 	t.Errorf("Minimum word length is six. Got %s", secretWord)
 	// }
 }
-func TestCorrectGuess(t *testing.T) {
+func TestCorrectGuess1(t *testing.T) {
 	// wordList := "/usr/share/dict/words"
 	// secretWord := getSecretWord(wordList)
 	secretWord := "computer"
 	state := NewGame(secretWord)
-	guess := 'c'
+	guess := 'm'
 	newState := playTurn(state, byte(guess))
 	expected := Game{
 		secretWord:     secretWord,
 		chancesLeft:    7,
+		guesses:        append(state.guesses, byte(guess)),
+		correctGuesses: append(state.correctGuesses, byte(guess)),
+	}
+
+	if newState.secretWord != expected.secretWord {
+		t.Errorf("Secret word modified!\n")
+	}
+	if newState.chancesLeft != expected.chancesLeft {
+		t.Errorf("Chances left modified!\n")
+	}
+	if string(newState.guesses) != string(expected.guesses) {
+		t.Errorf("Error processing guessed letters\n")
+	}
+	if string(newState.correctGuesses) != string(expected.correctGuesses) {
+		t.Errorf("Error processing Correctly guessed letters!\n")
+	}
+
+}
+func TestCorrectGuess2(t *testing.T) {
+	secretWord := "computer"
+	guess := 'c'
+	state := Game{
+		secretWord:     secretWord,
+		chancesLeft:    5,
+		guesses:        []byte{'a', 'b'},
+		correctGuesses: []byte{},
+	}
+	newState := playTurn(state, byte(guess))
+	expected := Game{
+		secretWord:     secretWord,
+		chancesLeft:    5,
 		guesses:        append(state.guesses, byte(guess)),
 		correctGuesses: append(state.correctGuesses, byte(guess)),
 	}
