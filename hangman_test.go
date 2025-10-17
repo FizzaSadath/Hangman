@@ -188,3 +188,32 @@ func TestIncorrectGuess2(t *testing.T) {
 	}
 
 }
+func TestAlreadyGuessed(t *testing.T) {
+	secretWord := "computer"
+	state := Game{
+		secretWord:     secretWord,
+		chancesLeft:    4,
+		guesses:        []byte{'a', 'b', 'd'},
+		correctGuesses: []byte{'c'},
+	}
+	guess := 'c'
+	newState := playTurn(state, byte(guess))
+	expected := Game{
+		secretWord:     state.secretWord,
+		chancesLeft:    state.chancesLeft,
+		guesses:        state.guesses,
+		correctGuesses: state.correctGuesses,
+	}
+	if newState.secretWord != expected.secretWord {
+		t.Errorf("Secret word modified!\n")
+	}
+	if newState.chancesLeft != expected.chancesLeft {
+		t.Errorf("Chances left modified!\n")
+	}
+	if string(newState.guesses) != string(expected.guesses) {
+		t.Errorf("Error processing guessed letters\n")
+	}
+	if string(newState.correctGuesses) != string(expected.correctGuesses) {
+		t.Errorf("Error processing Correctly guessed letters!\n")
+	}
+}
