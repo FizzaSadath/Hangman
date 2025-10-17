@@ -68,6 +68,14 @@ func playTurn(state Game, guess byte) Game {
 			correctGuesses: append(state.correctGuesses, guess),
 		}
 	}
+	if state.chancesLeft > 1 && !isContainByte && !isAlreadyGuessed {
+		state = Game{
+			secretWord:     state.secretWord,
+			chancesLeft:    state.chancesLeft - 1,
+			guesses:        append(state.guesses, guess),
+			correctGuesses: state.correctGuesses,
+		}
+	}
 
 	return state
 }
