@@ -88,8 +88,27 @@ func getUserInput() byte {
 
 }
 func displayProgress(state Game) string {
-	return "o f f _ _ _"
+	var result strings.Builder
+
+	for i := 0; i < len(state.secretWord); i++ {
+		letter := state.secretWord[i]
+		found := false
+		for _, guessed := range state.correctGuesses {
+			if guessed == letter {
+				found = true
+				break
+			}
+		}
+		if found {
+			fmt.Fprintf(&result, "%c ", letter)
+		} else {
+			result.WriteString("_ ")
+		}
+	}
+
+	return result.String()
 }
+
 func hasWon(state Game) bool {
 	letters := make(map[byte]bool)
 	for i := 0; i < len(state.secretWord); i++ {
