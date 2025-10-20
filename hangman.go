@@ -60,7 +60,7 @@ func playTurn(state Game, guess byte) Game {
 	isContainByte := strings.ContainsRune(state.secretWord, rune(guess))
 	isAlreadyGuessed := bytes.Contains(state.guesses, []byte{guess})
 
-	if state.chancesLeft > 1 && isContainByte && !isAlreadyGuessed {
+	if state.chancesLeft > 0 && isContainByte && !isAlreadyGuessed {
 		state = Game{
 			secretWord:     state.secretWord,
 			chancesLeft:    state.chancesLeft,
@@ -68,7 +68,7 @@ func playTurn(state Game, guess byte) Game {
 			correctGuesses: append(state.correctGuesses, guess),
 		}
 	}
-	if state.chancesLeft > 1 && !isContainByte && !isAlreadyGuessed {
+	if state.chancesLeft > 0 && !isContainByte && !isAlreadyGuessed {
 		state = Game{
 			secretWord:     state.secretWord,
 			chancesLeft:    state.chancesLeft - 1,
@@ -79,7 +79,20 @@ func playTurn(state Game, guess byte) Game {
 
 	return state
 }
+func getUserInput() byte {
+	fmt.Print("Enter a character: ")
+	reader := bufio.NewReader(os.Stdin)
+	b, _ := reader.ReadByte()
+	reader.ReadByte()
+	return b
+
+}
+func displayProgress(state Game) {
+}
+func hasWon(state Game) bool {
+	return false
+}
+
 func main() {
-	fmt.Println(getSecretWord("/usr/share/dict/words"))
-	fmt.Println(NewGame(getSecretWord("/usr/share/dict/words")))
+
 }
