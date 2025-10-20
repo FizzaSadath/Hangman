@@ -225,6 +225,28 @@ func TestHasWon(t *testing.T) {
 		correctGuesses: []byte{'e', 'r', 'o', 'c', 'm', 'p', 'u', 't'},
 	}
 	if !hasWon(state) {
-		t.Errorf("Error processing winning move!\n")
+		t.Errorf("Expected true but got false!\n	")
+	}
+	state = Game{
+		secretWord:     "office",
+		chancesLeft:    5,
+		guesses:        []byte{'a', 'e', 'f', 'o', 'd'},
+		correctGuesses: []byte{'e', 'f', 'o'},
+	}
+	if hasWon(state) {
+		t.Errorf("Expected false but got true!\n	")
+	}
+}
+func TestDisplayProgress(t *testing.T) {
+	state := Game{
+		secretWord:     "police",
+		chancesLeft:    4,
+		guesses:        []byte{'a', 'o', 'f', 'd'},
+		correctGuesses: []byte{'o'},
+	}
+	expectedProgress := "_ o _ _ _ _ "
+	actualProgress := displayProgress(state)
+	if expectedProgress != actualProgress {
+		t.Errorf("Expected %s but got %s!\n", expectedProgress, actualProgress)
 	}
 }
