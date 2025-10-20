@@ -189,14 +189,14 @@ func TestIncorrectGuess2(t *testing.T) {
 
 }
 func TestAlreadyGuessed(t *testing.T) {
-	secretWord := "computer"
+	secretWord := "police"
 	state := Game{
 		secretWord:     secretWord,
-		chancesLeft:    4,
-		guesses:        []byte{'a', 'b', 'd'},
+		chancesLeft:    6,
+		guesses:        []byte{'a', 'c'},
 		correctGuesses: []byte{'c'},
 	}
-	guess := 'c'
+	guess := 'a'
 	newState := playTurn(state, byte(guess))
 	expected := Game{
 		secretWord:     state.secretWord,
@@ -215,5 +215,16 @@ func TestAlreadyGuessed(t *testing.T) {
 	}
 	if string(newState.correctGuesses) != string(expected.correctGuesses) {
 		t.Errorf("Error processing Correctly guessed letters!\n")
+	}
+}
+func TestHasWon(t *testing.T) {
+	state := Game{
+		secretWord:     "computer",
+		chancesLeft:    4,
+		guesses:        []byte{'e', 'r', 'o', 'a', 'f', 'c', 'm', 'd', 'p', 'u', 't'},
+		correctGuesses: []byte{'e', 'r', 'o', 'c', 'm', 'p', 'u', 't'},
+	}
+	if !hasWon(state) {
+		t.Errorf("Error processing winning move!\n")
 	}
 }
