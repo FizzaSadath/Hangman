@@ -87,8 +87,8 @@ func getUserInput() byte {
 	return b
 
 }
-func displayProgress(state Game) {
-
+func displayProgress(state Game) string {
+	return "o f f _ _ _"
 }
 func hasWon(state Game) bool {
 	letters := make(map[byte]bool)
