@@ -80,7 +80,7 @@ func playTurn(state Game, guess byte) Game {
 	return state
 }
 func getUserInput() byte {
-	fmt.Print("Enter a character: ")
+	fmt.Print("\nEnter a character: ")
 	reader := bufio.NewReader(os.Stdin)
 	b, _ := reader.ReadByte()
 	reader.ReadByte()
@@ -128,7 +128,31 @@ func hasWon(state Game) bool {
 	}
 	return true
 }
+func hasLost(state Game) bool {
+	if state.chancesLeft == 0 {
+		return true
+	} else {
+		return false
+	}
+}
 
 func main() {
+	state := NewGame(getSecretWord("/usr/share/dict/words"))
+	//fmt.Println(state.secretWord)
+	fmt.Println(strings.Repeat("_ ", len(state.secretWord)))
+	fmt.Println("Chances left: ", state.chancesLeft)
+	for state.chancesLeft > 0 {
+		guess := getUserInput()
+		state = playTurn(state, guess)
+		progress := displayProgress(state)
+		fmt.Println(progress)
+		fmt.Println("Chances left: ", state.chancesLeft)
+		fmt.Println("Guessed letters: ", string(state.guesses))
+		fmt.Println()
+		if hasWon(state) {
+			fmt.Println("\nCongratulations! You won")
+			break
+		}
+	}
 
 }
