@@ -250,3 +250,15 @@ func TestDisplayProgress(t *testing.T) {
 		t.Errorf("Expected %s but got %s!\n", expectedProgress, actualProgress)
 	}
 }
+
+func TestHasLost(t *testing.T) {
+	state := Game{
+		secretWord:     "computer",
+		chancesLeft:    0,
+		guesses:        []byte{'e', 'x', 'z', 'q', 'b', 'l', 'n', 's'},
+		correctGuesses: []byte{'e'},
+	}
+	if !hasLost(state) {
+		t.Errorf("Expected true but got false!\n	")
+	}
+}
